@@ -1,9 +1,12 @@
 ---
 name: node-database
-description: Execute create, read, update, or delete operations on local collections directly from the workflow.
+description: Schema-only database node; not currently registered in the workflow editor node map or properties panel.
 ---
 
 # node-database
+
+## Status
+`database` exists in `WorkflowNodeType` and schema types, but it is not currently registered in the workflow editor node renderer or properties panel. Do not generate it for current Page Builder workflows unless the editor/runtime has been updated to support it.
 
 ## Purpose
 The `database` node is a direct integration to the platform's user collections. It allows agents to autonomously log records, update existing entries, or fetch reference data without needing a separate API route.

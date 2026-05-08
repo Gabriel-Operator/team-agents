@@ -1,9 +1,12 @@
 ---
 name: node-condition
-description: Branch the workflow execution path based on variable values or LLM decisions.
+description: Branch the workflow execution path based on variable values or LLM decisions. Supported, but hidden from the current toolbar palette.
 ---
 
 # node-condition
+
+## Status
+`condition` is still registered by the workflow editor and properties panel, but it is hidden from the visible toolbar palette. Treat it as supported for existing workflows and special-created workflows, not as a recommended palette node.
 
 ## Purpose
 The `condition` node evaluates data arriving from previous nodes. It outputs boolean edges (`condition: "true" | "false"`).
@@ -43,7 +46,7 @@ Uses an LLM prompt to compute the true/false routing dynamically based on contex
       "llmCondition": {
         "prompt": "Determine if the user's intent is to ask for a refund.",
         "model": "gpt-4o",
-        "contextVariables": ["{{start.emailBody}}"]
+        "contextVariables": ["{{start.input.emailBody}}"]
       }
     }
   }

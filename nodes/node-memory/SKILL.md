@@ -1,9 +1,12 @@
 ---
 name: node-memory
-description: Read and write intermediate state during short-term logic runs or persistent cross-run sessions.
+description: Legacy memory node retained for backward-compatible stored workflows.
 ---
 
 # node-memory
+
+## Status
+`memory` is a legacy/backward-compatible node. It remains registered for stored workflow definitions and in the properties panel, but it is removed from the visible toolbar palette. Prefer explicit node outputs, `structured_output`, endpoint inputs, and persisted output mappings for new workflows.
 
 ## Purpose
 The `memory` node coordinates read/write state access. It's particularly useful for `loop` counters, persistent `knowledge_base` staging, or passing implicit parameters to deep agent networks.

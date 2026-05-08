@@ -2,12 +2,12 @@
 'use strict';
 
 /**
- * go-task-orchestrator-skills CLI
+ * team-agents CLI
  *
  * Usage:
- *   npx github:go-code-bot/go-task-orchestrator-skills             # install into ./
- *   npx github:go-code-bot/go-task-orchestrator-skills add ./path  # install into target dir
- *   npx github:go-code-bot/go-task-orchestrator-skills sync ./path # re-sync (overwrite)
+ *   npx github:go-code-bot/team-agents             # install into ./
+ *   npx github:go-code-bot/team-agents add ./path  # install into target dir
+ *   npx github:go-code-bot/team-agents sync ./path # re-sync (overwrite)
  *
  * Zero npm dependencies — uses Node built-ins only.
  */
@@ -17,7 +17,7 @@ const fs = require('fs');
 const path = require('path');
 
 const OWNER = 'go-code-bot';
-const REPO = 'go-task-orchestrator-skills';
+const REPO = 'team-agents';
 const BRANCH = 'main';
 const RAW_BASE = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const API_BASE = `https://api.github.com`;
@@ -31,7 +31,7 @@ function fetch(url, opts = {}) {
   return new Promise((resolve, reject) => {
     const options = {
       headers: {
-        'User-Agent': 'go-task-orchestrator-skills-cli/1.0',
+        'User-Agent': 'team-agents-cli/1.0',
         'Accept': 'application/vnd.github.v3+json',
         ...(opts.headers || {}),
       },
@@ -53,7 +53,7 @@ function fetch(url, opts = {}) {
 
 function fetchBuffer(url) {
   return new Promise((resolve, reject) => {
-    https.get(url, { headers: { 'User-Agent': 'go-task-orchestrator-skills-cli/1.0' } }, (res) => {
+    https.get(url, { headers: { 'User-Agent': 'team-agents-cli/1.0' } }, (res) => {
       if (res.statusCode === 301 || res.statusCode === 302) {
         return fetchBuffer(res.headers.location).then(resolve).catch(reject);
       }
@@ -167,7 +167,7 @@ async function main() {
 \x1b[1mgabriel-operator task-orchestrator skills CLI\x1b[0m
 
 Usage:
-  npx github:go-code-bot/go-task-orchestrator-skills [command] [target-dir]
+  npx github:go-code-bot/team-agents [command] [target-dir]
 
 Commands:
   add [dir]     Install skill files into target dir (default: current dir). Skips existing files.
@@ -175,12 +175,12 @@ Commands:
   install [dir] Alias for add.
 
 Examples:
-  npx github:go-code-bot/go-task-orchestrator-skills
-  npx github:go-code-bot/go-task-orchestrator-skills add ./my-workflow
-  npx github:go-code-bot/go-task-orchestrator-skills sync .
+  npx github:go-code-bot/team-agents
+  npx github:go-code-bot/team-agents add ./my-workflow
+  npx github:go-code-bot/team-agents sync .
 
 Or with curl:
-  curl -fsSL https://raw.githubusercontent.com/go-code-bot/go-task-orchestrator-skills/main/install.sh | bash
+  curl -fsSL https://raw.githubusercontent.com/go-code-bot/team-agents/main/install.sh | bash
 `);
   } else {
     console.error(`\x1b[31mUnknown command: ${command}\x1b[0m  (run with --help for usage)`);

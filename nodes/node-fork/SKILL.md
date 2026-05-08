@@ -1,9 +1,12 @@
 ---
 name: node-fork
-description: Split the workflow into multiple concurrent execution paths (parallel branches).
+description: Legacy node that splits the workflow into multiple concurrent execution paths.
 ---
 
 # node-fork
+
+## Status
+`fork` is a legacy/backward-compatible node. It remains registered for stored workflow definitions and in the properties panel, but it is removed from the visible toolbar palette. Prefer `council.strategy.parallelGroups` or `control_flow` for new workflow JSON when possible.
 
 ## Purpose
 The `fork` node initiates parallel execution. It creates distinct branches that execute simultaneously until they hit a corresponding `join` node.
@@ -21,7 +24,7 @@ The `fork` node initiates parallel execution. It creates distinct branches that 
       "timeout": 30000,
       "branches": [
         { "id": "branch_1", "label": "Sales Checks" },
-        { "id": "branch_2", "label": "Marketing Checks", "condition": "{{start.marketingEnabled}}" }
+        { "id": "branch_2", "label": "Marketing Checks", "condition": "{{start.input.marketingEnabled}}" }
       ]
     }
   }

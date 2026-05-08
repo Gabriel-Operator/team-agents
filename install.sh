@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 # ──────────────────────────────────────────────────────────────────────────────
-# gabriel-operator task-orchestrator skills — curl installer
+# gabriel-operator team-agents skill pack — curl installer
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/go-code-bot/go-task-orchestrator-skills/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/go-code-bot/team-agents/main/install.sh | bash
 #   curl -fsSL ...install.sh | bash -s -- ./target-dir
 # ──────────────────────────────────────────────────────────────────────────────
 set -euo pipefail
 
 OWNER="go-code-bot"
-REPO="go-task-orchestrator-skills"
+REPO="team-agents"
 BRANCH="main"
 RAW_BASE="https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}"
 TARGET_DIR="${1:-.}"
@@ -66,6 +66,6 @@ install_skills() {
   node "${TMP_DIR}/cli.js" add "${TARGET_DIR}"
 }
 
-header "🔧 gabriel-operator task-orchestrator skills installer"
+header "🔧 gabriel-operator team-agents skill installer"
 check_node
 install_skills

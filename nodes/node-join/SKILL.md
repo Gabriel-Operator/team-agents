@@ -1,9 +1,12 @@
 ---
 name: node-join
-description: Wait for and synchronize parallel execution paths initiated by a fork node.
+description: Legacy node that waits for and synchronizes parallel execution paths initiated by a fork node.
 ---
 
 # node-join
+
+## Status
+`join` is a legacy/backward-compatible node. It remains registered for stored workflow definitions and in the properties panel, but it is removed from the visible toolbar palette. Prefer current council delegation and completion gates for new multi-member workflows.
 
 ## Purpose
 The `join` node acts as a barrier that waits for parallel branches (from a `fork` node) to complete before proceeding. It consolidates the distinct runs back into a single execution thread.

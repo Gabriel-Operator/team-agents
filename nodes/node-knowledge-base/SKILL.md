@@ -1,12 +1,15 @@
 ---
 name: node-knowledge-base
-description: Capture unstructured outputs and store them natively in the Gabriel RAG indices.
+description: Schema-only knowledge base capture node; not currently registered in the workflow editor node map or properties panel.
 ---
 
 # node-knowledge-base
 
+## Status
+`knowledge_base` exists in `WorkflowNodeType` and schema types, but it is not currently registered in the workflow editor node renderer or properties panel. Do not generate it for current Page Builder workflows unless the editor/runtime has been updated to support it.
+
 ## Purpose
-The `knowledge_base` node silences explicitly routes intermediate outputs straight into the vector DB for future workflows or chatbot retrievals. 
+The `knowledge_base` node routes intermediate outputs into the vector DB for future workflows or chatbot retrievals.
 
 ## Schema: `KnowledgeBaseNodeData`
 

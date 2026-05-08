@@ -1,26 +1,33 @@
-# Gabriel Operator Task Orchestrator Skills
+# Gabriel Operator — Team agents skill pack
 
-These are the canonical skill scaffolds for the `page-builder-team-agent` (aka Task Orchestrator) workflows.
-The folder defines JSON structures for `start`, `agent`, `council`, and 11 other parallel integration nodes.
+Canonical skill scaffolds for **page-builder team-agent** (task orchestrator) workflows: JSON shapes for workflow nodes, `team-agent.json`, and task orchestration.
+
+Published from: **[go-code-bot/team-agents](https://github.com/go-code-bot/team-agents)**.
+
+## Current node model
+
+See `README` sections in repo root `SKILL.md` for the latest toolbar vs legacy vs schema-only nodes.
 
 ## Installation
 
-### Method 1: NPX (Recommended)
-You can scaffold these skills directly into your directory with `npx`:
+### Method 1: NPX (recommended)
 
 ```bash
-npx github:go-code-bot/go-task-orchestrator-skills
+npx github:go-code-bot/team-agents
 ```
 
-To install into a specific subdirectory:
+Install into a subdirectory:
+
 ```bash
-npx github:go-code-bot/go-task-orchestrator-skills add ./my-team-agent
+npx github:go-code-bot/team-agents add ./my-team-agent
 ```
 
 ### Method 2: Curl
+
 ```bash
-curl -fsSL https://raw.githubusercontent.com/go-code-bot/go-task-orchestrator-skills/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/go-code-bot/team-agents/main/install.sh | bash
 ```
 
 ## Documentation
-Once installed, read `SKILL.md` (and `nodes/node-*/SKILL.md`) in your target directory to understand how to read and write `team-agent.json` data.
+
+After install, read **`SKILL.md`** and **`nodes/node-*/SKILL.md`** for how to edit `team-agent.json` and related assets.
