@@ -1,0 +1,5 @@
+interface:
+  display_name: "Team Agents"
+  short_description: "Orchestrate page-builder team agents."
+  brand_color: "#2563EB"
+  default_prompt: "Use $team-agents to update the page-builder team agent workflow endpoint."

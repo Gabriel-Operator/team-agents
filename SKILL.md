@@ -1,11 +1,6 @@
 ---
 name: team-agents
-description: >
-  Edit a git-backed page-builder team agent by updating assets/team-agent.json
-  and assets/task-orchestration.json while keeping the skill scaffold files together.
-  Use this skill to orchestrate Page Builder workflow nodes, native browser
-  agents, MCP tools, councils, human choices, media generation, and Mastra-native
-  control nodes into a full workflow endpoint.
+description: "Edit a git-backed page-builder team agent by updating assets/team-agent.json and assets/task-orchestration.json while keeping the skill scaffold files together. Use this skill to orchestrate Page Builder workflow nodes, native browser agents, MCP tools, councils, human choices, media generation, and Mastra-native control nodes into a full workflow endpoint."
 ---
 
 # Page Builder Team Agent Skill
@@ -13,6 +8,57 @@ description: >
 ## Goal
 Maintain one page-builder team agent endpoint per repository.
 This skill defines the high-level workflow orchestration of multiple tools, agents, and logic nodes. Unlike `workflow-builder` (which handles low-level browser automation steps), this skill wires up whole Page Builder workflows: Start input contracts, connector nodes, council orchestration, AI nodes, control flow, and final endpoint outputs.
+
+## Using this skill in coding agents
+
+Gabriel Operator skills are designed for Claude Code, Codex, Cursor, Hermes, OpenClaw, and any agent that supports skill packs. Work in the git-backed team-agent repository connected to your Page Builder endpoint.
+
+### Install the skill pack
+
+| Agent | Install |
+|-------|---------|
+| **Claude Code** | `npx skills add go-code-bot/team-agents` |
+| **Codex** | `codex plugin marketplace add Gabriel-Operator/gabriel-operator-coding-agent-plugin --sparse .agents/plugins` then install the Gabriel Operator plugin |
+| **Cursor** | `npx github:go-code-bot/team-agents add ./my-team-agent` or copy into `.cursor/skills/team-agents/` |
+| **Hermes / generic CLI** | `npx github:go-code-bot/team-agents add ./my-team-agent` |
+| **OpenClaw** | `npx skills add go-code-bot/team-agents` then `openclaw gateway connect --url https://your-openclaw-gateway` |
+| **Gabriel Operator monorepo** | `cp -R server/skills/team-agents ./your-git-repo/` |
+
+Alternative curl installer:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/go-code-bot/team-agents/main/install.sh | bash
+```
+
+### Modify with your coding agent
+
+1. Open the git-backed team-agent repository.
+2. Tell your agent: *"Read `SKILL.md` and update `assets/team-agent.json` (workflow nodes and edges) and `assets/task-orchestration.json` (child skill mappings) for \<describe the orchestration change\>. Consult `nodes/node-*/SKILL.md` for node-specific shapes."*
+3. Validate before committing:
+   ```bash
+   npx tsx scripts/validate-team-agent.ts assets/team-agent.json
+   npx tsx scripts/validate-task-orchestration.ts assets/task-orchestration.json
+   ```
+4. Commit and push to the default branch.
+
+**Example prompts:**
+- *"Add a native browser agent node and wire it to the council output."*
+- *"Add an MCP tool node for Gmail and connect it after the start node."*
+- **OpenClaw:** *"Update assets/team-agent.json and task-orchestration.json, validate both files, then run the endpoint via the apps API."*
+
+### Deploy and run
+
+1. Validate both JSON files (see above).
+2. Commit and push to the default branch so Gabriel syncs the endpoint workflow.
+3. **Invoke the endpoint** from scripts or your backend:
+   ```bash
+   curl -X POST "https://gabrieloperator.com/api/apps/{appId}/{endpointSlug}/run" \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer $GABRIEL_TOKEN" \
+     -d '{}'
+   ```
+   Replace `{appId}` and `{endpointSlug}` with values from `assets/team-agent.json`. Shape the JSON body to match the start node `inputSchema`.
+4. Preview and debug runs in the Page Builder workflow editor.
 
 ## Canonical Files
 - `/SKILL.md`
