@@ -64,9 +64,51 @@ The `suspend_resume` node is the current toolbar node for Mastra-native suspend 
 - **config.suspendMessage**: Message shown while waiting for resume.
 - **config.resumeDescription**: Describes expected resume data.
 - **config.timeoutMs**: Optional max wait before auto-fail. `0` means unlimited in the editor default.
-- **config.resumeFields**: Structured form fields for resume data. Field types are `"text"`, `"textarea"`, `"number"`, `"boolean"`, and `"select"`.
+- **config.resumeFields**: Structured form fields for resume data. Field types are `"text"`, `"textarea"`, `"number"`, `"boolean"`, `"select"`, and `"image"`.
+- **config.resumeFieldsFrom**: Resolve the fields from an upstream node output instead of listing them here. See below.
 - **config.sleepMs**: Milliseconds to sleep when `mode` is `"sleep"`.
 - **config.untilIso**: ISO datetime string when `mode` is `"sleep_until"`.
+
+## Runtime-resolved fields (`resumeFieldsFrom`)
+
+`resumeFields` describes a question set known when the workflow is authored. When
+the questions are only knowable at run time — filling a form discovered during
+the run, for instance — point at an upstream node output instead:
+
+```json
+{
+  "id": "node_collect",
+  "type": "suspend_resume",
+  "data": {
+    "label": "Ask what to fill",
+    "config": {
+      "mode": "suspend",
+      "suspendMessage": "I need a few details to complete this form.",
+      "resumeFieldsFrom": "start.record.data.form_fields"
+    }
+  }
+}
+```
+
+The value is a variable path, or a full `{{...}}` expression. Resolution is
+**workflow-scoped**: `start.*` for the workflow's own inputs, `<nodeId>.*` for an
+earlier node's output, or a workflow variable.
+
+A pipeline `schema-form:discover:` transition writes `form_fields` onto the case
+rather than into this workflow, so reach it through the workflow's inputs —
+`start.record.data.form_fields`. A pipeline transition id is **not** a node id and
+cannot be referenced directly.
+
+Rules:
+
+- `resumeFieldsFrom` wins when both it and `resumeFields` are set.
+- The resolved array is validated server-side before anyone is asked anything.
+  Unknown field types, missing or duplicate keys, and selects without options
+  **fail the run** rather than suspending with a schema that cannot be answered.
+- Unrecognised properties on a resolved field are dropped.
+- The field schema is server-authoritative. A resume request supplies answers
+  only; any schema it sends is ignored, and answers are validated against the
+  fields persisted at suspend time.
 
 ## Authoring Rules
 - Use `suspend_resume` for new waits, sleeps, and human resume points.
