@@ -102,6 +102,11 @@ cannot be referenced directly.
 Rules:
 
 - `resumeFieldsFrom` wins when both it and `resumeFields` are set.
+- Dynamic form collection should resolve the trusted fields from the pipeline
+  record (for example `{{start.record.data.form_fields}}`). Do not regenerate or
+  paraphrase the schema with an LLM. The same suspended node is resumed by chat,
+  in-app voice, delegated phone, or secure email; channels must not create
+  separate workflow attempts or write directly to List data.
 - The resolved array is validated server-side before anyone is asked anything.
   Unknown field types, missing or duplicate keys, and selects without options
   **fail the run** rather than suspending with a schema that cannot be answered.
