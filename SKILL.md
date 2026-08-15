@@ -60,6 +60,31 @@ curl -fsSL https://raw.githubusercontent.com/go-code-bot/team-agents/main/instal
    Replace `{appId}` and `{endpointSlug}` with values from `assets/team-agent.json`. Shape the JSON body to match the start node `inputSchema`.
 4. Preview and debug runs in the Page Builder workflow editor.
 
+## Inside a Persona workspace
+
+This repository is usually a **git submodule** of an AI Persona repository, at
+`references/team-agents/<resource-key>/`, so one clone of the Persona reaches this skill
+pack alongside its workflow, pipeline, and list repos. All links are depth 1 — this repo
+is a direct submodule of the Persona, never nested under the pipeline that calls it.
+
+Ownership split, matching the other builders:
+
+| Location | Owns |
+|---|---|
+| Parent Persona `references/workspace.json` + `.gitmodules` | The depth-1 gitlink after workspace publish |
+| This repository | `assets/team-agent.json`, `assets/task-orchestration.json`, and the node guides |
+
+A Pipeline transition reaches this endpoint through `workflowEndpointId`, which is a
+runtime id rather than a portable ref. Do **not** add this repository to the parent's
+`references/registry.json` and do not write `"dependsOn": [{ "kind": "team_agent" }]`.
+Bind the team agent in Gabriel; the parent records the edge in generated
+`workspace.json` and checks out this repo under `references/team-agents/`.
+
+**This definition is not portable.** `appId`, `endpointId`, and `data.config.actionId`
+on native connector nodes are environment-local ids. They stay in Gabriel bindings and
+must never be copied into `workspace.json`. Missing Git binding is an unresolved
+workspace row and blocks parent publish.
+
 ## Canonical Files
 - `/SKILL.md`
 - `/scripts/`
