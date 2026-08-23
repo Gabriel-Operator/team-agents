@@ -5,6 +5,15 @@ description: "Edit a git-backed page-builder team agent by updating assets/team-
 
 # Page Builder Team Agent Skill
 
+Root `gabriel.workspace.json` declares `assets/team-agent.json` validation as required and
+task-orchestration validation as conditional on that asset being present. Team Agents are
+same-environment workspace nodes, never portable registry rows. Commit and push this child
+before the parent Persona publishes its declared-branch pin.
+Unmarked legacy Team-Agent repos use the parent's loud conventional-validator fallback;
+new marked repos fail on missing declared scripts. Team Agents never add portable Workflow
+rows. If removed from the graph, parent `prune` removes only the validated gitlink and
+`.gitmodules` section, preserving this physical checkout.
+
 ## Goal
 Maintain one page-builder team agent endpoint per repository.
 This skill defines the high-level workflow orchestration of multiple tools, agents, and logic nodes. Unlike `workflow-builder` (which handles low-level browser automation steps), this skill wires up whole Page Builder workflows: Start input contracts, connector nodes, council orchestration, AI nodes, control flow, and final endpoint outputs.

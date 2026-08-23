@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "scaffold": "team-agents",
+  "kind": "team_agent",
+  "validators": [
+    {
+      "runner": "tsx",
+      "script": "scripts/validate-team-agent.ts",
+      "assetPath": "assets/team-agent.json",
+      "mode": "required"
+    },
+    {
+      "runner": "tsx",
+      "script": "scripts/validate-task-orchestration.ts",
+      "assetPath": "assets/task-orchestration.json",
+      "mode": "if_asset_present"
+    }
+  ]
+}

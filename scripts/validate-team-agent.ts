@@ -53,6 +53,8 @@ if ('workflow' in endpoint && endpoint.workflow !== undefined && endpoint.workfl
     throw new Error('endpoint.workflow.variables must be an array when present');
   }
 
+  const nodeIds = new Set<string>();
+
   for (const [index, node] of workflow.nodes.entries()) {
     if (!node || typeof node !== 'object') {
       throw new Error(`endpoint.workflow.nodes[${index}] must be an object`);
@@ -63,6 +65,10 @@ if ('workflow' in endpoint && endpoint.workflow !== undefined && endpoint.workfl
     if (typeof record.id !== 'string' || !record.id.trim()) {
       throw new Error(`endpoint.workflow.nodes[${index}].id is required`);
     }
+    if (nodeIds.has(record.id as string)) {
+      throw new Error(`endpoint.workflow.nodes has duplicate id ${record.id as string}`);
+    }
+    nodeIds.add(record.id as string);
 
     if (typeof record.type !== 'string' || !record.type.trim()) {
       throw new Error(`endpoint.workflow.nodes[${index}].type is required`);
@@ -73,6 +79,7 @@ if ('workflow' in endpoint && endpoint.workflow !== undefined && endpoint.workfl
     }
   }
 
+  const edgeIds = new Set<string>();
   for (const [index, edge] of workflow.edges.entries()) {
     if (!edge || typeof edge !== 'object') {
       throw new Error(`endpoint.workflow.edges[${index}] must be an object`);
@@ -84,6 +91,16 @@ if ('workflow' in endpoint && endpoint.workflow !== undefined && endpoint.workfl
       if (typeof record[field] !== 'string' || !(record[field] as string).trim()) {
         throw new Error(`endpoint.workflow.edges[${index}].${field} is required`);
       }
+    }
+    if (edgeIds.has(record.id as string)) {
+      throw new Error(`endpoint.workflow.edges has duplicate id ${record.id as string}`);
+    }
+    edgeIds.add(record.id as string);
+    if (!nodeIds.has(record.source as string)) {
+      throw new Error(`endpoint.workflow.edges[${index}].source references a missing node`);
+    }
+    if (!nodeIds.has(record.target as string)) {
+      throw new Error(`endpoint.workflow.edges[${index}].target references a missing node`);
     }
   }
 }

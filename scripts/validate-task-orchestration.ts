@@ -32,6 +32,17 @@ if (!parsed.orchestratorCompletion || typeof parsed.orchestratorCompletion !== '
   throw new Error('task-orchestration.json must include orchestratorCompletion');
 }
 
+const completion = parsed.orchestratorCompletion as Record<string, unknown>;
+for (const field of ['id', 'title']) {
+  if (typeof completion[field] !== 'string' || !(completion[field] as string).trim()) {
+    throw new Error(`orchestratorCompletion.${field} is required`);
+  }
+}
+if (typeof completion.requireAllRequiredTodos !== 'boolean') {
+  throw new Error('orchestratorCompletion.requireAllRequiredTodos must be a boolean');
+}
+
+const workflowNodeIds = new Set<string>();
 for (const [index, child] of (parsed.childSkills as unknown[]).entries()) {
   if (!child || typeof child !== 'object') {
     throw new Error(`childSkills[${index}] must be an object`);
@@ -49,11 +60,21 @@ for (const [index, child] of (parsed.childSkills as unknown[]).entries()) {
   if (!Array.isArray(record.todoMappings)) {
     throw new Error(`childSkills[${index}] must include todoMappings[]`);
   }
+  if (workflowNodeIds.has(record.workflowNodeId as string)) {
+    throw new Error(`childSkills contains duplicate workflowNodeId ${record.workflowNodeId as string}`);
+  }
+  workflowNodeIds.add(record.workflowNodeId as string);
 }
 
 if (teamAgentPath && fs.existsSync(teamAgentPath)) {
   const teamAgentRaw = fs.readFileSync(teamAgentPath, 'utf8');
   const teamAgent = JSON.parse(teamAgentRaw) as Record<string, unknown>;
+  if (teamAgent.appId !== parsed.appId) {
+    throw new Error('task-orchestration appId must match team-agent.json');
+  }
+  if (teamAgent.endpointId !== parsed.endpointId) {
+    throw new Error('task-orchestration endpointId must match team-agent.json');
+  }
   const endpoint = teamAgent.endpoint as Record<string, unknown> | undefined;
   const workflow = endpoint?.workflow as Record<string, unknown> | undefined;
   const nodes = Array.isArray(workflow?.nodes) ? workflow.nodes : [];
