@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { validateWorkflowInstructionBinding } from './workflow-instruction-binding';
 
 const filePath = process.argv[2];
 
@@ -76,6 +77,11 @@ if ('workflow' in endpoint && endpoint.workflow !== undefined && endpoint.workfl
 
     if ('data' in record && record.data !== undefined && (record.data === null || typeof record.data !== 'object')) {
       throw new Error(`endpoint.workflow.nodes[${index}].data must be an object when present`);
+    }
+    const config = (record.data as { config?: Record<string, unknown> } | undefined)?.config;
+    if (config?.workflowInstruction !== undefined) {
+      if (record.type !== 'structured_output') throw new Error('workflowInstruction requires structured_output');
+      validateWorkflowInstructionBinding(config.workflowInstruction);
     }
   }
 

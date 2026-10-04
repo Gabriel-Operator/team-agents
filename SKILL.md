@@ -5,6 +5,10 @@ description: "Edit a git-backed page-builder team agent by updating assets/team-
 
 # Page Builder Team Agent Skill
 
+## Offline model and node compatibility
+
+Read [the embedded runtime and local-model contract](references/offline-runtime-v1.md). Classify every nested node and tool against the selected device model, repository adapters, device capabilities, and connectivity policy. Keep device model selection and execution ownership outside authored graph JSON. A missing capability blocks the graph; it never causes cloud fallback.
+
 Root `gabriel.workspace.json` declares `assets/team-agent.json` validation as required and
 task-orchestration validation as conditional on that asset being present. Team Agents are
 same-environment workspace nodes, never portable registry rows. Commit and push this child

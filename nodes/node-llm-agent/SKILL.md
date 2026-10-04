@@ -5,6 +5,10 @@ description: Configure a standalone Mastra-style LLM agent with REST tools and i
 
 # node-llm-agent
 
+## Offline runtime
+
+Read [the embedded offline contract](../../references/offline-runtime-v1.md) before claiming this node can run locally. Include its nested model, storage, device, and connectivity requirements in the graph report; missing adapters block execution without hosted fallback.
+
 ## Purpose
 The `llm_agent` node runs a configurable LLM agent directly in the workflow. It is not a native connector node and does not get a `task-orchestration.json` child skill.
 

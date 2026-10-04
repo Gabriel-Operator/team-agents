@@ -5,6 +5,10 @@ description: Legacy wait node retained for backward compatibility; use node-susp
 
 # node-delay
 
+## Offline runtime
+
+Read [the embedded offline contract](../../references/offline-runtime-v1.md) before claiming this node can run locally. Include its nested model, storage, device, and connectivity requirements in the graph report; missing adapters block execution without hosted fallback.
+
 ## Status
 `delay` is deprecated and removed from the visible toolbar palette. It remains in `WorkflowNodeType` and the properties panel for backward compatibility with stored workflow definitions. Use `suspend_resume` for new workflow JSON.
 

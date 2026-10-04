@@ -5,6 +5,10 @@ description: Suspend a workflow for human resume data, or sleep for a duration o
 
 # node-suspend-resume
 
+## Offline runtime
+
+Read [the embedded offline contract](../../references/offline-runtime-v1.md) before claiming this node can run locally. Include its nested model, storage, device, and connectivity requirements in the graph report; missing adapters block execution without hosted fallback.
+
 ## Purpose
 The `suspend_resume` node is the current toolbar node for Mastra-native suspend and sleep behavior. It replaces the legacy `delay` node for new workflow JSON.
 
