@@ -21,4 +21,3 @@ export function validateWorkflowInstructionBinding(value: unknown): WorkflowInst
   }
   return binding;
 }
-
