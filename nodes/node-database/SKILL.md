@@ -5,6 +5,10 @@ description: Schema-only database node; not currently registered in the workflow
 
 # node-database
 
+## Offline runtime
+
+Read [the embedded offline contract](../../references/offline-runtime-v1.md) before claiming this node can run locally. Include its nested model, storage, device, and connectivity requirements in the graph report; missing adapters block execution without hosted fallback.
+
 ## Status
 `database` exists in `WorkflowNodeType` and schema types, but it is not currently registered in the workflow editor node renderer or properties panel. Do not generate it for current Page Builder workflows unless the editor/runtime has been updated to support it.
 

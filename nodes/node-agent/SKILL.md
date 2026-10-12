@@ -117,3 +117,7 @@ Do not create child skills for MCP connector nodes, `llm_agent` nodes, `agent_ap
 ## Variable References
 - Native/MCP node response: `{{node_id.response}}`
 - Common workflow variable list also exposes agent output as `{{node_id.output}}`.
+
+## Persona integration references
+
+Standalone `llm_agent` configs may set `personaPageId` and `integrationRefs` (registry IDs) to use a subset of that persona’s published integration bindings. The runtime resolves the acting user’s connection policy and tool permissions; it cannot expand them. Native agent/workflow actions keep their existing routing. Load `persona-integrations` for voice, vision, host, and offline requirements.

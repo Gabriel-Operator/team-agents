@@ -5,6 +5,10 @@ description: Legacy memory node retained for backward-compatible stored workflow
 
 # node-memory
 
+## Offline runtime
+
+Read [the embedded offline contract](../../references/offline-runtime-v1.md) before claiming this node can run locally. Include its nested model, storage, device, and connectivity requirements in the graph report; missing adapters block execution without hosted fallback.
+
 ## Status
 `memory` is a legacy/backward-compatible node. It remains registered for stored workflow definitions and in the properties panel, but it is removed from the visible toolbar palette. Prefer explicit node outputs, `structured_output`, endpoint inputs, and persisted output mappings for new workflows.
 

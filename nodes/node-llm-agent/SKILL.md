@@ -5,6 +5,10 @@ description: Configure a standalone Mastra-style LLM agent with REST tools and i
 
 # node-llm-agent
 
+## Offline runtime
+
+Read [the embedded offline contract](../../references/offline-runtime-v1.md) before claiming this node can run locally. Include its nested model, storage, device, and connectivity requirements in the graph report; missing adapters block execution without hosted fallback.
+
 ## Purpose
 The `llm_agent` node runs a configurable LLM agent directly in the workflow. It is not a native connector node and does not get a `task-orchestration.json` child skill.
 
@@ -66,3 +70,9 @@ The `llm_agent` node runs a configurable LLM agent directly in the workflow. It 
 ## Authoring Rules
 - Do not create a `childSkills[]` mapping for this node. It is a standalone LLM workflow node, not a native browser connector.
 - Put browser automations in top-level native `agent` nodes when they need task orchestration child skills.
+
+## Persona integration references
+
+Standalone `llm_agent` configs may set `personaPageId` and `integrationRefs` (registry IDs) to use a subset of that persona’s published integration bindings. The runtime resolves the acting user’s connection policy and tool permissions; it cannot expand them. Native agent/workflow actions keep their existing routing. Load `persona-integrations` for voice, vision, host, and offline requirements.
+
+Visual inputs can be referenced with `visualInputVariable` for image/video uploads and `visualSessionId` for the caller’s current camera, screen, browser, or desktop evidence. Configure `personaPageId`, enable its understanding capabilities, and use only published `integrationRefs`. The backend validates actor access and supplies grounded visual analysis.

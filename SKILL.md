@@ -5,6 +5,10 @@ description: "Edit a git-backed page-builder team agent by updating assets/team-
 
 # Page Builder Team Agent Skill
 
+## Offline model and node compatibility
+
+Read [the embedded runtime and local-model contract](references/offline-runtime-v1.md). Classify every nested node and tool against the selected device model, repository adapters, device capabilities, and connectivity policy. Keep device model selection and execution ownership outside authored graph JSON. A missing capability blocks the graph; it never causes cloud fallback.
+
 Root `gabriel.workspace.json` declares `assets/team-agent.json` validation as required and
 task-orchestration validation as conditional on that asset being present. Team Agents are
 same-environment workspace nodes, never portable registry rows. Commit and push this child
@@ -226,3 +230,12 @@ The task orchestration validator reads sibling `team-agent.json` when present an
 3. **Variable References**: Prefer current editor references such as `{{start.input.fieldKey}}`, `{{node_id.output}}`, `{{node_id.response}}`, `{{node_id.response.result}}`, or node-specific references documented in `nodes/`.
 4. **Keep IDs intact**: Never change `appId`, `endpointId`, `masterSkill`, or `endpoint.id` unless the repository binding changes.
 5. **Keep runtime overlays out of JSON**: Do not persist runtime-only fields such as `lastOutput`, `lastExecutionTime`, `lastStatus`, `isAnimating`, `memberStatuses`, `memberProgress`, or `councilRunLogs`.
+
+## Persona integration references
+
+Standalone `llm_agent` configs may set `personaPageId` and `integrationRefs` (registry IDs) to use a subset of that persona’s published integration bindings. The runtime resolves the acting user’s connection policy and tool permissions; it cannot expand them. Native agent/workflow actions keep their existing routing. Load `persona-integrations` for voice, vision, host, and offline requirements.
+
+
+## Command governance and cost handoff
+
+For slash-command authoring, read [command governance and estimated cost](references/command-governance.md). Report warnings and the selected review profile with cost comparisons before handing off the command.

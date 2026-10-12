@@ -79,6 +79,14 @@ if ('workflow' in endpoint && endpoint.workflow !== undefined && endpoint.workfl
       throw new Error(`endpoint.workflow.nodes[${index}].data must be an object when present`);
     }
     const config = (record.data as { config?: Record<string, unknown> } | undefined)?.config;
+    if (config?.integrationRefs !== undefined) {
+      if (record.type !== 'llm_agent' || !Array.isArray(config.integrationRefs) || config.integrationRefs.length > 52 || config.integrationRefs.some(ref => typeof ref !== 'string' || !/^(tool|channel|voice|browser|sandbox|filesystem)\.[a-z0-9-]+$/.test(ref))) {
+        throw new Error('integrationRefs requires an llm_agent node and valid persona integration IDs');
+      }
+    }
+    for (const field of ['personaPageId', 'visualInputVariable', 'visualSessionId']) {
+      if (config?.[field] !== undefined && (record.type !== 'llm_agent' || typeof config[field] !== 'string' || (config[field] as string).length > 1024)) throw new Error(`${field} must be an llm_agent string reference`);
+    }
     if (config?.workflowInstruction !== undefined) {
       if (record.type !== 'structured_output') throw new Error('workflowInstruction requires structured_output');
       validateWorkflowInstructionBinding(config.workflowInstruction);
