@@ -20,6 +20,17 @@ portable author settings (`governanceConfig` on the persona; `governance` on the
 slash command); do not commit quote/run/proposal ids or approval records to Git.
 Mandatory human approval, authorization and audit are never optional settings.
 
+Every confirmed slash-command/Canvas-playbook team uses a separate required
+Governance Agent for its versioned, playbook-specific rulebook. The Process
+Reviewer checks task and artifact quality; the Governance Agent returns one
+evidence-backed result for every configured rule at each governed review point.
+Missing or malformed rule checks fail closed to human review. Team rulebook
+changes require renewed team confirmation. Rule instructions are semantic policy,
+not authority: server-side capabilities, current resource permissions and exact
+effect approvals determine what can execute. The Auditor reconciles supported
+usage/cost and does not make compliance decisions. Teams cannot select
+`rules_only`; their required review coverage is fixed by the confirmed team.
+
 Read settings with `gabriel_get_command_governance`. Save optional overrides with
 `gabriel_update_command_governance` using its returned `expectedRevision`.
 Observe runs with `gabriel_get_governance_run` and `gabriel_list_governance_events`.
